@@ -55,7 +55,7 @@ def getTopWords(subreddit):
     for text in subRedditPosts:
         for word in text.split(" "):
             word = word.lower()
-            if word in STOP_WORDS:
+            if word in STOP_WORDS or len(word) < 2:
                 continue
             if word in commonWords:
                 commonWords[word] += 1
