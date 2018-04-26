@@ -1,14 +1,8 @@
 import requests
 import socket
+from stopWords import STOP_WORDS
 
 REDDIT_URL = "www.reddit.com"
-BLACK_LIST = {
-    "and", "the", "a",
-    "to", "in", "of",
-    "for", "with", "i",
-    "on", "from", "at",
-    "so", "this"
-}
 
 """
 def getJSON(url):
@@ -61,7 +55,7 @@ def getTopWords(subreddit):
     for text in subRedditPosts:
         for word in text.split(" "):
             word = word.lower()
-            if word in BLACK_LIST:
+            if word in STOP_WORDS:
                 continue
             if word in commonWords:
                 commonWords[word] += 1
