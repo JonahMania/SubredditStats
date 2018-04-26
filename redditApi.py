@@ -6,6 +6,18 @@ REDDIT_URL = "www.reddit.com"
 NUM_POSTS = 32
 TOP_OF = "day"
 
+def recursiveGetComments(json):
+    ret = []
+
+    if json == "":
+        return []
+    for comment in json["data"]["children"]:
+        if not("body" in comment["data"]):
+            continue
+        ret.append(comment["data"]["body"])
+        ret.extend(recursiveGetComments(comment["data"]["replies"]))
+    return ret
+
 def getCommentText(url):
     text = []
     response = requests.get("https://" + REDDIT_URL + url + ".json", headers = {'User-agent': 'subredditstats 0.0'})
@@ -15,11 +27,8 @@ def getCommentText(url):
         print("Error " + str(data["error"]) + ": " + data["message"])
         return []
 
-
     for x in data:
-        for comment in x["data"]["children"]:
-            if "body" in comment["data"]:
-                text.append(comment["data"]["body"])
+        text.extend(recursiveGetComments(x))
 
     return text
 
@@ -38,7 +47,6 @@ def getSubreddit(subreddit):
     return ret
 
 def getTopWords(subreddit):
-
     commonWords = {}
     subRedditPosts = getSubreddit(subreddit)
     for text in subRedditPosts:
