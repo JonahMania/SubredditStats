@@ -6,22 +6,9 @@ REDDIT_URL = "www.reddit.com"
 NUM_POSTS = 32
 TOP_OF = "day"
 
-"""
-def getJSON(url):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((REDDIT_URL, 80))
-    request = b"GET " + url.encode() + b" HTTPS/1.1\nHost: " + REDDIT_URL.encode() + b"\n\n"
-    print(request)
-    s.send(request)
-    response = s.recv(1000)
-    s.close()
-    return response
-"""
-
 def getCommentText(url):
     text = []
     response = requests.get("https://" + REDDIT_URL + url + ".json", headers = {'User-agent': 'subredditstats 0.0'})
-
     data = response.json()
 
     if "error" in data:
