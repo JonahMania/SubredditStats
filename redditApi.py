@@ -3,6 +3,8 @@ import socket
 from stopWords import STOP_WORDS
 
 REDDIT_URL = "www.reddit.com"
+NUM_POSTS = 32
+TOP_OF = "day"
 
 """
 def getJSON(url):
@@ -35,7 +37,7 @@ def getCommentText(url):
     return text
 
 def getSubreddit(subreddit):
-    response = requests.get("https://" + REDDIT_URL + "/r/" + subreddit + "/top/.json?count=40?t=day", headers = {'User-agent': 'subredditstats 0.0'})
+    response = requests.get("https://" + REDDIT_URL + "/r/" + subreddit + "/top/.json?count="+ str(NUM_POSTS) +"?t=" + TOP_OF, headers = {'User-agent': 'subredditstats 0.0'})
     data = response.json()
     ret = []
     if "error" in data:
